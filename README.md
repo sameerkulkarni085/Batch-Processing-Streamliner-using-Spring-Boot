@@ -2,43 +2,40 @@
 
 ## Introduction
 
-This Java-based Spring Boot application is designed to streamline batch processing tasks within a retail environment. It allows for the efficient application of discounts to a list of product IDs based on specific criteria, updates the product details in a database, and subsequently publishes these changes to a Kafka topic for real-time event handling.
+This Spring Boot application streamlines batch processing for retail by efficiently applying discounts to product IDs based on specific criteria, updating product details in the database, and publishing changes to a Kafka topic for real-time event handling.
 
 ## Project Description
 
-### What's This Project About?
-In a typical e-commerce or retail setting, adjusting prices based on promotions, seasonal discounts, or stock levels is a common but resource-intensive task, especially when dealing with large volumes of products. This application tackles this challenge by automating the discount application process, ensuring that product pricing is dynamically adjusted and consistent across all platforms.
+In e-commerce and retail, dynamically adjusting product prices to reflect promotions, seasonal discounts, or stock availability is a frequent requirement. However, this process becomes challenging and resource-intensive when dealing with vast numbers of products. Manually updating prices increases the risk of errors and inconsistencies across platforms. This application addresses the complexity by automating the discount application process. It ensures that discounts are applied efficiently based on predefined criteria, updates the pricing information directly in the product database, and synchronizes changes across all connected systems. This automation guarantees accurate, real-time price adjustments, maintaining consistency across platforms while significantly reducing manual effort and errors.
 
-### Real-Time Example
-Imagine an online store preparing for a Black Friday sale. They plan to offer a 10% discount on all electronics that cost more than $1000 and a 5% discount on those priced above $500 but below $1000. Manually adjusting the prices of thousands of products could lead to errors and inconsistencies. This application automates this process: it receives a list of product IDs, checks each product’s price, applies the appropriate discount, saves the updated prices back to the database, and pushes these changes to a Kafka topic. This setup ensures that all downstream systems get updated in real-time about the price changes, enabling a consistent shopping experience during high-traffic sales events.
+### Use Case
+Imagine a grocery delivery service preparing for a festive season sale. They plan to offer a 15% discount on all perishable goods like fruits and vegetables that expire within three days and a 10% discount on products expiring within a week. Managing these discounts manually for hundreds of thousands of items could result in errors and delayed updates.
 
-### How Are We Doing It?
-The application uses three different approaches to process the batch updates:
-1. **`Using Streams`**: Processes the list of product IDs sequentially.
-2. **`Using Parallel Streams`**: Leverages Java’s parallel streams to take advantage of multicore processors for faster processing.
-3. **`Using CompletableFuture`**: Implements multithreading by creating batches of product IDs and processing each batch in parallel, which can be more efficient in systems where lots of I/O operations are involved.
+This application automates the process by receiving a list of product IDs, checking the expiration dates of each item, applying the appropriate discount, updating the prices in the database, and publishing the changes to a Kafka topic. This ensures that all downstream systems, including the e-commerce website and mobile app, reflect the price updates in real time, ensuring accurate and seamless discounts for customers during peak sale periods.
 
-Each method has its own endpoint, allowing the application to be tested under different processing scenarios to understand which method performs best under various conditions.
+### Process Behind
+The application uses three methods to handle batch updates:  
+1. **Streams**: Processes product IDs one by one in a sequential manner.  
+2. **Parallel Streams**: Uses multiple processor cores to speed up processing.  
+3. **CompletableFuture**: Splits product IDs into batches and processes them in parallel threads, ideal for handling tasks with heavy I/O operations.
 
-### Purpose of This Project
-The primary goal of this project is to demonstrate how different Java concurrency models can be applied to real-world batch processing tasks in a Spring Boot application. It provides a practical example of how modern Java features can be used to improve the performance and scalability of backend systems in retail and e-commerce operations.
 
-## Technologies
-- Java 17
-- Spring Boot 3.3.5
-- Kafka
-- MySQL
-- Spring Data JPA
-- Spring Kafka
+### Objective
+The main objective of this project is to showcase the application of various Java concurrency models to real-world batch processing scenarios in a Spring Boot application. It serves as a practical demonstration of leveraging modern Java features to enhance the performance and scalability of backend systems in retail and e-commerce.
+
+## Technologies used
+- Java Spring Boot 3 
+- Kafka  
+- MySQL  
+- Spring Data JPA  
+- Spring Kafka 
 
 ## Dependencies
-To handle the project's requirements, the following Maven dependencies are included:
 
-- **`Spring Boot Starter Actuator`**: Helps with monitoring and managing the application.
-- **`Spring Boot Starter Data JPA`**: Configures Spring Data JPA repositories.
-- **`Spring Boot Starter Web`**: Provides all the dependencies and auto-configuration necessary to develop web applications.
-- **`Spring Kafka`**: Enables building applications that can talk to Kafka brokers.
-- **`MySQL Connector Java`**: MySQL JDBC driver for database connectivity.
-- **`Lombok`**: Simplifies the code by generating boilerplate code like getters, setters, and constructors.
-- **`Spring Boot Starter Test & Spring Kafka Test`**: Provides testing utilities for Spring Boot applications including Kafka integration.
-
+- **`Spring Boot Starter Actuator`**: Facilitates application monitoring and management.  
+- **`Spring Boot Starter Data JPA`**: Simplifies interaction with databases using Spring Data JPA repositories.  
+- **`Spring Boot Starter Web`**: Offers the necessary setup for developing web applications with ease.  
+- **`Spring Kafka`**: Provides tools to enable seamless communication with Kafka brokers.  
+- **`MySQL Connector Java`**: Ensures connectivity between the application and a MySQL database.  
+- **`Lombok`**: Reduces boilerplate code by auto-generating common methods like getters, setters, and constructors.  
+- **`Spring Boot Starter Test & Spring Kafka Test`**: Includes tools for effectively testing Spring Boot applications, including Kafka integration tests.  
